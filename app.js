@@ -31,6 +31,21 @@ function timeToMinutes(time) {
   return hours * 60 + minutes;
 }
 
+function normalizeTimeInput(value) {
+  let clean = value.trim().replace(".", ":");
+  if (/^\d{3,4}$/.test(clean)) clean = `${clean.slice(0, -2)}:${clean.slice(-2)}`;
+  const match = clean.match(/^(\d{1,2}):(\d{2})$/);
+  if (!match) return null;
+  const hours = Number(match[1]);
+  const minutes = Number(match[2]);
+  if (hours > 23 || minutes > 59) return null;
+  return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}`;
+}
+
+function isValidTime(value) {
+  return normalizeTimeInput(value) !== null;
+}
+
 function getDayMinutes() {
   const wake = timeToMinutes(state.wakeTime);
   let end = timeToMinutes(state.endTime);
@@ -46,27 +61,12 @@ function formatDuration(totalMinutes) {
   return `${hours} ч ${minutes} мин`;
 }
 
-function clockOptions(selected, type) {
-  const values = type === "hours"
-    ? Array.from({ length: 24 }, (_, index) => index)
-    : [0, 15, 30, 45];
-  return values.map(value => {
-    const label = String(value).padStart(2, "0");
-    return `<option value="${label}" ${Number(selected) === value ? "selected" : ""}>${label}</option>`;
-  }).join("");
-}
-
 function clockField(label, prefix, value) {
-  const [hours, minutes] = value.split(":").map(Number);
   return `
-    <fieldset class="clock-input-group">
-      <legend>${label}</legend>
-      <div class="clock-selects">
-        <label><span class="sr-only">Часы</span><select class="time-input" id="${prefix}-hours" aria-label="${label}, часы">${clockOptions(hours, "hours")}</select></label>
-        <span aria-hidden="true">:</span>
-        <label><span class="sr-only">Минуты</span><select class="time-input" id="${prefix}-minutes" aria-label="${label}, минуты">${clockOptions(minutes, "minutes")}</select></label>
-      </div>
-    </fieldset>`;
+    <label class="field-label">
+      ${label}
+      <input class="time-input" id="${prefix}-time" type="text" inputmode="numeric" autocomplete="off" maxlength="5" placeholder="07:30" value="${escapeHtml(value)}" aria-describedby="time-format-hint">
+    </label>`;
 }
 
 function progressHeader(step) {
@@ -97,12 +97,27 @@ function renderIntro() {
 }
 
 function renderDayLength() {
+  const valid = isValidTime(state.wakeTime) && isValidTime(state.endTime);
+  if (!valid) {
+    app.innerHTML = `
+      ${progressHeader(1)}
+      <h2>Сколько длился ваш день?</h2>
+      <p class="hint" id="time-format-hint">Введите время вручную в формате 07:30. Если день ещё продолжается, укажите текущее время.</p>
+      <div class="time-grid">
+        ${clockField("Проснулись", "wake", state.wakeTime)}
+        ${clockField("Закончили день", "end", state.endTime)}
+      </div>
+      <div class="message">Проверьте время. Нужен формат часы:минуты, например 07:30.</div>
+      ${actions({ nextDisabled: true })}
+    `;
+    return;
+  }
   const dayMinutes = getDayMinutes();
   const unusual = dayMinutes < 360 || dayMinutes > 1320;
   app.innerHTML = `
     ${progressHeader(1)}
     <h2>Сколько длился ваш день?</h2>
-    <p class="hint">Укажите, во сколько вы проснулись и во сколько закончился день. Если он ещё продолжается, укажите текущее время.</p>
+    <p class="hint" id="time-format-hint">Введите время вручную в формате 07:30. Если день ещё продолжается, укажите текущее время.</p>
     <div class="time-grid">
       ${clockField("Проснулись", "wake", state.wakeTime)}
       ${clockField("Закончили день", "end", state.endTime)}
@@ -333,11 +348,9 @@ function render() {
 
 app.addEventListener("change", event => {
   const target = event.target;
-  if (["wake-hours", "wake-minutes", "end-hours", "end-minutes"].includes(target.id)) {
+  if (["wake-time", "end-time"].includes(target.id)) {
     const prefix = target.id.startsWith("wake") ? "wake" : "end";
-    const hours = app.querySelector(`#${prefix}-hours`).value;
-    const minutes = app.querySelector(`#${prefix}-minutes`).value;
-    state[`${prefix}Time`] = `${hours}:${minutes}`;
+    state[`${prefix}Time`] = normalizeTimeInput(target.value) ?? target.value.trim();
     state.unusualTimeConfirmed = false;
     renderDayLength();
   } else if (target.id === "confirm-unusual") {
