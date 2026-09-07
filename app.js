@@ -46,6 +46,29 @@ function formatDuration(totalMinutes) {
   return `${hours} ч ${minutes} мин`;
 }
 
+function clockOptions(selected, type) {
+  const values = type === "hours"
+    ? Array.from({ length: 24 }, (_, index) => index)
+    : [0, 15, 30, 45];
+  return values.map(value => {
+    const label = String(value).padStart(2, "0");
+    return `<option value="${label}" ${Number(selected) === value ? "selected" : ""}>${label}</option>`;
+  }).join("");
+}
+
+function clockField(label, prefix, value) {
+  const [hours, minutes] = value.split(":").map(Number);
+  return `
+    <fieldset class="clock-input-group">
+      <legend>${label}</legend>
+      <div class="clock-selects">
+        <label><span class="sr-only">Часы</span><select class="time-input" id="${prefix}-hours" aria-label="${label}, часы">${clockOptions(hours, "hours")}</select></label>
+        <span aria-hidden="true">:</span>
+        <label><span class="sr-only">Минуты</span><select class="time-input" id="${prefix}-minutes" aria-label="${label}, минуты">${clockOptions(minutes, "minutes")}</select></label>
+      </div>
+    </fieldset>`;
+}
+
 function progressHeader(step) {
   const progress = (step / 5) * 100;
   return `
@@ -81,8 +104,8 @@ function renderDayLength() {
     <h2>Сколько длился ваш день?</h2>
     <p class="hint">Укажите, во сколько вы проснулись и во сколько закончился день. Если он ещё продолжается, укажите текущее время.</p>
     <div class="time-grid">
-      <label class="field-label">Проснулись<input class="time-input" id="wake-time" type="time" value="${escapeHtml(state.wakeTime)}"></label>
-      <label class="field-label">Закончили день<input class="time-input" id="end-time" type="time" value="${escapeHtml(state.endTime)}"></label>
+      ${clockField("Проснулись", "wake", state.wakeTime)}
+      ${clockField("Закончили день", "end", state.endTime)}
     </div>
     <div class="message message--ok">Продолжительность дня: ${formatDuration(dayMinutes)}</div>
     ${unusual ? `<div class="message">Время выглядит необычно. Проверьте его или подтвердите, что всё верно.<br><label><input id="confirm-unusual" type="checkbox" ${state.unusualTimeConfirmed ? "checked" : ""}> Всё верно</label></div>` : ""}
@@ -310,12 +333,11 @@ function render() {
 
 app.addEventListener("change", event => {
   const target = event.target;
-  if (target.id === "wake-time") {
-    state.wakeTime = target.value;
-    state.unusualTimeConfirmed = false;
-    renderDayLength();
-  } else if (target.id === "end-time") {
-    state.endTime = target.value;
+  if (["wake-hours", "wake-minutes", "end-hours", "end-minutes"].includes(target.id)) {
+    const prefix = target.id.startsWith("wake") ? "wake" : "end";
+    const hours = app.querySelector(`#${prefix}-hours`).value;
+    const minutes = app.querySelector(`#${prefix}-minutes`).value;
+    state[`${prefix}Time`] = `${hours}:${minutes}`;
     state.unusualTimeConfirmed = false;
     renderDayLength();
   } else if (target.id === "confirm-unusual") {
