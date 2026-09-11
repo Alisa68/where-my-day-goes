@@ -61,9 +61,9 @@ button { cursor: pointer; }
   min-height: 620px;
   padding: clamp(28px, 6vw, 64px);
   background: var(--surface);
-  border: 2px solid var(--text);
+  border: 0;
   border-radius: var(--radius);
-  box-shadow: var(--shadow);
+  box-shadow: none;
 }
 
 .step-meta {
@@ -143,13 +143,13 @@ h3 {
   border-radius: 12px;
   color: #fff;
   background: var(--accent);
-  font-weight: 750;
-  box-shadow: 4px 4px 0 var(--text);
+  font-weight: 600;
+  box-shadow: none;
   transition: transform .15s ease, background .15s ease;
 }
 
 .button:hover { background: var(--accent-dark); }
-.button:active { transform: translate(2px, 2px); box-shadow: 2px 2px 0 var(--text); }
+.button:active { transform: translateY(1px); box-shadow: none; }
 .button:disabled { cursor: not-allowed; opacity: .42; }
 .button--ghost { color: var(--text); background: #fff; border-color: var(--text); box-shadow: none; }
 .button--ghost:hover { color: #fff; background: var(--text); }
@@ -354,7 +354,7 @@ h3 {
 
 @media (max-width: 620px) {
   .app-shell { width: min(100% - 28px, 820px); padding-top: 16px; }
-  .card { min-height: 0; padding: 28px 20px; border-radius: 22px; box-shadow: 7px 7px 0 var(--accent); }
+  .card { min-height: 0; padding: 28px 20px; border-radius: 22px; box-shadow: none; }
   h1 { font-size: clamp(52px, 17vw, 72px); }
   .hero { grid-template-columns: 1fr; gap: 12px; }
   .hero__visual { min-height: 290px; }
