@@ -88,11 +88,19 @@ function actions({ back = true, nextLabel = "Дальше", nextDisabled = false
 
 function renderIntro() {
   app.innerHTML = `
-    <p class="supporting">Небольшая пауза для внимательного взгляда</p>
-    <h1>Куда уходит мой день?</h1>
-    <p class="lead">Ответьте на пять вопросов об одном дне. Вы увидите, куда ушло время, чего вам не хватило и что можно немного изменить уже завтра.</p>
-    <p class="hint">Около 2 минут. Без регистрации и оценок.</p>
-    <div class="actions"><span></span><button class="button" data-action="start">Посмотреть свой день</button></div>
+    <div class="hero">
+      <div class="hero__copy">
+        <p class="supporting">Небольшая пауза для внимательного взгляда</p>
+        <h1>Куда уходит мой день?</h1>
+        <p class="lead">Ответьте на пять вопросов об одном дне. Вы увидите, куда ушло время, чего вам не хватило и что можно немного изменить уже завтра.</p>
+        <p class="hint">Около 2 минут. Без регистрации и оценок.</p>
+        <button class="button hero__button" data-action="start">Посмотреть свой день</button>
+      </div>
+      <div class="hero__visual" aria-hidden="true">
+        <span class="hero__shape"></span>
+        <img class="hero__cat" src="assets/cat-hero.png" alt="">
+      </div>
+    </div>
   `;
 }
 
@@ -329,7 +337,7 @@ function renderResult() {
     <section class="result-section">
       <h3>${state.need === "enough" ? "Что стоит сохранить" : "Что можно попробовать завтра"}</h3>
       <p>${getRecommendation(scenario)}</p>
-      <div class="cat-note"><span class="cat-note__icon" aria-hidden="true">🐈</span><span>${getCatLine(scenario)}</span></div>
+      <div class="cat-note"><img class="cat-note__image" src="assets/cat-hero.png" alt="" aria-hidden="true"><span>${getCatLine(scenario)}</span></div>
     </section>
     <div class="actions"><span></span><button class="button" data-action="restart">Посмотреть ещё один день</button></div>
   `;

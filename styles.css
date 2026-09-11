@@ -1,22 +1,22 @@
 :root {
-  --bg: #f5f1e8;
-  --surface: #fffdf8;
-  --text: #24231f;
-  --muted: #706e66;
-  --line: #ded8ca;
-  --accent: #7256d8;
-  --accent-dark: #5940bb;
-  --accent-soft: #ebe5ff;
-  --success: #32735d;
-  --warning: #9c552f;
-  --shadow: 0 20px 55px rgba(54, 45, 24, 0.11);
-  --radius: 28px;
-  --work: #7158d9;
-  --home: #e38863;
-  --road: #d1a338;
-  --entertainment: #de6b96;
-  --recovery: #4f9d83;
-  --unplanned: #718096;
+  --bg: #ffffff;
+  --surface: #ffffff;
+  --text: #0b0b0b;
+  --muted: #666666;
+  --line: #d9d9d9;
+  --accent: #763cdc;
+  --accent-dark: #6029c1;
+  --accent-soft: #f0e9ff;
+  --success: #0b0b0b;
+  --warning: #0b0b0b;
+  --shadow: 12px 12px 0 #763cdc;
+  --radius: 30px;
+  --work: #763cdc;
+  --home: #9a6be8;
+  --road: #bea0f1;
+  --entertainment: #0b0b0b;
+  --recovery: #646464;
+  --unplanned: #b3b3b3;
 }
 
 * { box-sizing: border-box; }
@@ -25,10 +25,7 @@ body {
   margin: 0;
   min-height: 100vh;
   color: var(--text);
-  background:
-    radial-gradient(circle at 8% 8%, rgba(224, 107, 150, .13), transparent 24rem),
-    radial-gradient(circle at 92% 88%, rgba(79, 157, 131, .14), transparent 25rem),
-    var(--bg);
+  background: var(--bg);
   font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
@@ -37,7 +34,7 @@ button, input, select { font: inherit; }
 button { cursor: pointer; }
 
 .app-shell {
-  width: min(100% - 32px, 820px);
+  width: min(100% - 48px, 1180px);
   margin: 0 auto;
   padding: 28px 0 36px;
 }
@@ -47,25 +44,24 @@ button { cursor: pointer; }
   align-items: center;
   gap: 10px;
   margin: 0 0 18px 8px;
-  color: var(--muted);
+  color: var(--text);
   font-size: 14px;
   font-weight: 650;
 }
 
 .brand__dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
+  width: 14px;
+  height: 14px;
+  border: 2px solid var(--text);
+  border-radius: 4px;
   background: var(--accent);
-  box-shadow: 13px 0 0 #e38863, 26px 0 0 #4f9d83;
-  margin-right: 26px;
 }
 
 .card {
-  min-height: 580px;
+  min-height: 620px;
   padding: clamp(28px, 6vw, 64px);
-  background: rgba(255, 253, 248, .96);
-  border: 1px solid rgba(222, 216, 202, .8);
+  background: var(--surface);
+  border: 2px solid var(--text);
   border-radius: var(--radius);
   box-shadow: var(--shadow);
 }
@@ -99,8 +95,8 @@ h1, h2, h3, p { margin-top: 0; }
 h1 {
   max-width: 660px;
   margin-bottom: 22px;
-  font-size: clamp(42px, 8vw, 72px);
-  line-height: .98;
+  font-size: clamp(52px, 7vw, 92px);
+  line-height: .93;
   letter-spacing: -.055em;
 }
 
@@ -120,7 +116,7 @@ h3 {
 
 .lead {
   max-width: 610px;
-  color: #4f4d47;
+  color: #353535;
   font-size: clamp(18px, 2.7vw, 22px);
   line-height: 1.52;
 }
@@ -141,19 +137,20 @@ h3 {
 .button {
   min-height: 50px;
   padding: 13px 22px;
-  border: 1px solid transparent;
-  border-radius: 14px;
+  border: 2px solid var(--text);
+  border-radius: 12px;
   color: #fff;
   background: var(--accent);
   font-weight: 750;
+  box-shadow: 4px 4px 0 var(--text);
   transition: transform .15s ease, background .15s ease;
 }
 
 .button:hover { background: var(--accent-dark); }
-.button:active { transform: translateY(1px); }
+.button:active { transform: translate(2px, 2px); box-shadow: 2px 2px 0 var(--text); }
 .button:disabled { cursor: not-allowed; opacity: .42; }
-.button--ghost { color: var(--text); background: transparent; border-color: var(--line); }
-.button--ghost:hover { background: #f5f0e7; }
+.button--ghost { color: var(--text); background: #fff; border-color: var(--text); box-shadow: none; }
+.button--ghost:hover { color: #fff; background: var(--text); }
 .button--small { min-height: 40px; padding: 8px 14px; font-size: 14px; }
 
 .time-grid {
@@ -192,11 +189,11 @@ h3 {
   padding: 14px 16px;
   border-radius: 14px;
   color: var(--warning);
-  background: #fff0e7;
+  background: var(--accent-soft);
   line-height: 1.45;
 }
 
-.message--ok { color: var(--success); background: #eaf6ef; }
+.message--ok { color: var(--success); background: #f3f3f3; }
 
 .distribution-summary {
   position: sticky;
@@ -209,7 +206,7 @@ h3 {
   padding: 13px 16px;
   border: 1px solid var(--line);
   border-radius: 14px;
-  background: rgba(255, 253, 248, .95);
+  background: rgba(255, 255, 255, .95);
   backdrop-filter: blur(8px);
   font-weight: 720;
 }
@@ -295,13 +292,56 @@ h3 {
   gap: 16px;
   margin-top: 24px;
   padding: 18px;
+  border: 2px solid var(--text);
   border-radius: 20px;
   background: var(--accent-soft);
   font-size: 18px;
   font-weight: 780;
 }
 
-.cat-note__icon { font-size: 34px; line-height: 1; }
+.cat-note__image {
+  width: 62px;
+  height: 62px;
+  flex: 0 0 auto;
+  object-fit: contain;
+}
+
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(260px, .65fr);
+  align-items: center;
+  gap: clamp(24px, 5vw, 64px);
+  min-height: 490px;
+}
+
+.hero__copy { position: relative; z-index: 1; }
+.hero__button { margin-top: 24px; }
+
+.hero__visual {
+  position: relative;
+  align-self: end;
+  min-height: 440px;
+}
+
+.hero__shape {
+  position: absolute;
+  inset: 70px 0 24px;
+  border: 2px solid var(--text);
+  border-radius: 50% 50% 18px 18px;
+  background: var(--accent);
+  transform: rotate(4deg);
+}
+
+.hero__cat {
+  position: absolute;
+  z-index: 1;
+  right: -18px;
+  bottom: 0;
+  width: min(390px, 115%);
+  max-height: 500px;
+  object-fit: contain;
+  filter: drop-shadow(6px 8px 0 rgba(11, 11, 11, .18));
+}
 
 .privacy-note {
   margin: 14px auto 0;
@@ -311,8 +351,14 @@ h3 {
 }
 
 @media (max-width: 620px) {
-  .app-shell { width: min(100% - 20px, 820px); padding-top: 16px; }
-  .card { min-height: 0; padding: 26px 20px; border-radius: 22px; }
+  .app-shell { width: min(100% - 28px, 820px); padding-top: 16px; }
+  .card { min-height: 0; padding: 28px 20px; border-radius: 22px; box-shadow: 7px 7px 0 var(--accent); }
+  h1 { font-size: clamp(52px, 17vw, 72px); }
+  .hero { grid-template-columns: 1fr; gap: 12px; }
+  .hero__visual { min-height: 290px; }
+  .hero__shape { inset: 48px 8% 14px; }
+  .hero__cat { right: 50%; width: min(310px, 92%); transform: translateX(50%); }
+  .hero__button { width: 100%; }
   .time-grid { grid-template-columns: 1fr; }
   .time-row { grid-template-columns: 1fr 1fr; }
   .time-row__label { grid-column: 1 / -1; }
