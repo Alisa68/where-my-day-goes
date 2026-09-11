@@ -98,7 +98,7 @@ function renderIntro() {
       </div>
       <div class="hero__visual" aria-hidden="true">
         <span class="hero__shape"></span>
-        <img class="hero__cat" src="assets/cat-hero.png" alt="">
+        <img class="hero__cat" src="assets/cat-hero.webp" alt="">
       </div>
     </div>
   `;
@@ -337,7 +337,7 @@ function renderResult() {
     <section class="result-section">
       <h3>${state.need === "enough" ? "Что стоит сохранить" : "Что можно попробовать завтра"}</h3>
       <p>${getRecommendation(scenario)}</p>
-      <div class="cat-note"><img class="cat-note__image" src="assets/cat-hero.png" alt="" aria-hidden="true"><span>${getCatLine(scenario)}</span></div>
+      <div class="cat-note"><img class="cat-note__image" src="assets/cat-hero.webp" alt="" aria-hidden="true"><span>${getCatLine(scenario)}</span></div>
     </section>
     <div class="actions"><span></span><button class="button" data-action="restart">Посмотреть ещё один день</button></div>
   `;
