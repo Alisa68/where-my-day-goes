@@ -90,8 +90,8 @@ function renderIntro() {
   app.innerHTML = `
     <div class="hero">
       <div class="hero__copy">
-        <p class="supporting">Небольшая пауза для внимательного взгляда</p>
-        <h1>Куда уходит мой день?</h1>
+        <p class="supporting">Время без оценок</p>
+        <h1>День как есть</h1>
         <p class="lead">Ответьте на пять вопросов об одном дне. Вы увидите, куда ушло время, чего вам не хватило и что можно немного изменить уже завтра.</p>
         <p class="hint">Около 2 минут. Без регистрации и оценок.</p>
         <button class="button hero__button" data-action="start">Посмотреть свой день</button>
