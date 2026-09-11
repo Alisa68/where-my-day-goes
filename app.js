@@ -308,6 +308,7 @@ function getCatLine(scenario) {
 }
 
 function renderResult() {
+  app.classList.add("card--result");
   const scenario = getScenario();
   const copy = scenarioCopy[scenario];
   const taskText = mainTaskCopy(scenario);
@@ -327,24 +328,29 @@ function renderResult() {
       <p class="supporting">Ваш день крупным планом</p>
       <h2>Итог вашего дня</h2>
     </div>
-    <div class="chart" aria-label="Распределение времени">${chart}</div>
-    <section class="result-section">
-      <h3>${copy.title}</h3>
-      ${copy.paragraphs.map(paragraph => `<p>${paragraph}</p>`).join("")}
-      ${taskText ? `<p>${taskText}</p>` : ""}
-      <p>${feelingCopy[state.feeling]}</p>
-    </section>
-    <section class="result-section">
-      <h3>${state.need === "enough" ? "Что стоит сохранить" : "Что можно попробовать завтра"}</h3>
-      <p>${getRecommendation(scenario)}</p>
-      <div class="cat-note"><img class="cat-note__image" src="/where-my-day-goes/assets/cat-hero.webp?v=3" alt="" aria-hidden="true"><span>${getCatLine(scenario)}</span></div>
-    </section>
+    <div class="result-layout">
+      <div class="chart" aria-label="Распределение времени">${chart}</div>
+      <div class="result-layout__content">
+        <section class="result-section">
+          <h3>${copy.title}</h3>
+          ${copy.paragraphs.map(paragraph => `<p>${paragraph}</p>`).join("")}
+          ${taskText ? `<p>${taskText}</p>` : ""}
+          <p>${feelingCopy[state.feeling]}</p>
+        </section>
+        <section class="result-section result-section--advice">
+          <h3>${state.need === "enough" ? "Что стоит сохранить" : "Что можно попробовать завтра"}</h3>
+          <p>${getRecommendation(scenario)}</p>
+          <div class="cat-note"><img class="cat-note__image" src="/where-my-day-goes/assets/cat-hero.webp?v=3" alt="" aria-hidden="true"><span>${getCatLine(scenario)}</span></div>
+        </section>
+      </div>
+    </div>
     <div class="actions"><span></span><button class="button" data-action="restart">Посмотреть ещё один день</button></div>
   `;
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
 function render() {
+  if (state.step !== 6) app.classList.remove("card--result");
   if (state.step === 0) return renderIntro();
   if (state.step === 1) return renderDayLength();
   if (state.step === 2) return renderDistribution();
