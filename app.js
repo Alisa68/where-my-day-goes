@@ -1,10 +1,10 @@
 const categories = [
-  { id: "work", label: "Работа или учёба", color: "var(--work)" },
-  { id: "home", label: "Дом и забота о близких", color: "var(--home)" },
-  { id: "road", label: "Дорога и дела вне дома", color: "var(--road)" },
-  { id: "entertainment", label: "Развлечения", description: "Соцсети, игры, сериалы", color: "var(--entertainment)" },
-  { id: "recovery", label: "Отдых и время для себя", description: "Прогулки, тренировки, спорт, йога, медитация, чтение и увлечения", color: "var(--recovery)" },
-  { id: "unplanned", label: "Незапланированное и прочее", color: "var(--unplanned)" }
+  { id: "work", label: "Работа или учёба", color: "var(--work)", textColor: "#fff" },
+  { id: "home", label: "Дом и забота о близких", color: "var(--home)", textColor: "#111" },
+  { id: "road", label: "Дорога и дела вне дома", color: "var(--road)", textColor: "#111" },
+  { id: "entertainment", label: "Развлечения", description: "Соцсети, игры, сериалы", color: "var(--entertainment)", textColor: "#111" },
+  { id: "recovery", label: "Отдых и время для себя", description: "Прогулки, тренировки, спорт, йога, медитация, чтение и увлечения", color: "var(--recovery)", textColor: "#fff" },
+  { id: "unplanned", label: "Незапланированное и прочее", color: "var(--unplanned)", textColor: "#111" }
 ];
 
 const state = {
@@ -317,7 +317,7 @@ function renderResult() {
     const percent = total ? Math.round((minutes / total) * 100) : 0;
     return `
       <div class="bar-row">
-        <div class="bar-row__meta"><span class="bar-row__name">${category.label}</span><span class="bar-row__time">${formatDuration(minutes)} · ${percent}%</span></div>
+        <div class="bar-row__meta"><span class="bar-row__name">${category.label}</span><span class="bar-row__time">${formatDuration(minutes)} <strong class="bar-row__percent" style="background:${category.color};color:${category.textColor}">${percent}%</strong></span></div>
         <div class="bar-row__track"><div class="bar-row__fill" style="width:${percent}%;background:${category.color}"></div></div>
       </div>`;
   }).join("");
@@ -325,7 +325,7 @@ function renderResult() {
   app.innerHTML = `
     <div class="result-intro">
       <p class="supporting">Ваш день крупным планом</p>
-      <h2>Вот каким получился ваш день</h2>
+      <h2>Итог вашего дня</h2>
     </div>
     <div class="chart" aria-label="Распределение времени">${chart}</div>
     <section class="result-section">
