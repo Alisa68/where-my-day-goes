@@ -52,9 +52,9 @@ button { cursor: pointer; }
 .brand__dot {
   width: 14px;
   height: 14px;
-  border: 2px solid var(--text);
+  border: 0;
   border-radius: 4px;
-  background: var(--accent);
+  background: #ff9418;
 }
 
 .card {
@@ -273,10 +273,10 @@ h3 {
 
 .choice input:focus-visible + span { outline: 3px solid #ff9418; outline-offset: 2px; }
 
-.result-intro { margin-bottom: 34px; }
+.result-intro { margin-bottom: 24px; }
 .result-intro h2 { margin-bottom: 8px; }
 
-.chart { display: grid; gap: 14px; margin: 26px 0 42px; }
+.chart { display: grid; align-content: start; gap: 13px; margin: 0; }
 
 .bar-row { display: grid; gap: 7px; }
 .bar-row__meta { display: flex; justify-content: space-between; gap: 16px; font-size: 14px; }
@@ -287,29 +287,52 @@ h3 {
 .bar-row__fill { height: 100%; min-width: 3px; border-radius: inherit; }
 
 .result-section {
-  padding: 26px 0;
+  padding: 0;
+  border: 0;
+}
+
+.result-section p { max-width: 650px; margin-bottom: 10px; font-size: 16px; line-height: 1.48; }
+.result-section p:last-child { margin-bottom: 0; }
+
+.result-section--advice {
+  padding-top: 20px;
   border-top: 1px solid var(--line);
 }
 
-.result-section p { max-width: 650px; margin-bottom: 12px; font-size: 17px; line-height: 1.58; }
-.result-section p:last-child { margin-bottom: 0; }
+.result-layout {
+  display: grid;
+  grid-template-columns: minmax(0, .95fr) minmax(0, 1.05fr);
+  gap: clamp(36px, 5vw, 70px);
+  align-items: start;
+}
+
+.result-layout__content { display: grid; gap: 20px; }
+
+.card--result {
+  min-height: 0;
+  padding-top: 38px;
+  padding-bottom: 38px;
+}
+
+.card--result .result-intro h2 { font-size: clamp(38px, 5vw, 58px); }
+.card--result .actions { margin-top: 24px; }
 
 .cat-note {
   display: flex;
   align-items: center;
   gap: 16px;
-  margin-top: 24px;
-  padding: 18px;
+  margin-top: 18px;
+  padding: 12px 14px;
   border: 0;
   border-radius: 20px;
   background: var(--accent-soft);
-  font-size: 18px;
-  font-weight: 650;
+  font-size: 16px;
+  font-weight: 450;
 }
 
 .cat-note__image {
-  width: 62px;
-  height: 62px;
+  width: 48px;
+  height: 48px;
   flex: 0 0 auto;
   object-fit: contain;
 }
@@ -373,6 +396,9 @@ h3 {
   .actions { align-items: stretch; flex-direction: column-reverse; }
   .actions .button { width: 100%; }
   .distribution-summary { font-size: 14px; }
+  .result-layout { grid-template-columns: 1fr; gap: 32px; }
+  .result-layout__content { gap: 24px; }
+  .card--result { padding-top: 28px; padding-bottom: 28px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
